@@ -15,7 +15,6 @@
  * @release   GIT: $Id: v0.0.1
  * @link      http://symphonic.websublime.com
  */
-
 namespace League\Notes\Annotation;
 
 /**
@@ -29,12 +28,13 @@ namespace League\Notes\Annotation;
  * @version   Release: v0.0.1
  * @link      http://symphonic.websublime.com
  */
-class AnnotationValueInArrayMatcher extends AnnotationValueMatcher
+class NestedAnnotationMatcher extends AnnotationMatcher
 {
-    public function process($value)
-    {
-        return array($value);
+    protected function process($result) {
+        /*$builder = new AnnotationsBuilder;
+
+        return $builder->instantiateAnnotation($result[1], $result[2]);*/
     }
 }
-/** @end AnnotationValueInArrayMatcher.php */
+/** @end NestedAnnotationMatcher.php */
  
