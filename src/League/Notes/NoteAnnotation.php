@@ -31,7 +31,7 @@ use League\Notes\Exception\NoteException;
  * @version   Release: v0.0.1
  * @link      http://symphonic.websublime.com
  */
-class Note
+class NoteAnnotation
 {
     public $value;
 
@@ -103,5 +103,5 @@ class Note
 
     protected function checkConstraints($target) {}
 }
-/** @end Note.php */
+/** @end NoteAnnotation.php */
  
