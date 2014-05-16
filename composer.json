@@ -18,6 +18,10 @@
             "role": "Developer"
         }
     ],
+    "require": {
+        "php": ">=5.3.2",
+        "doctrine/annotations": "*"
+    },
     "require-dev": {
         "silex/silex": "~1.0"
     },
