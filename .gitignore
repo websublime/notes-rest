@@ -2,3 +2,5 @@ addendum
 .idea
 composer.lock
 vendor
+/_deprecated/
+.DS_Store
