@@ -4,3 +4,4 @@ composer.lock
 vendor
 /_deprecated/
 .DS_Store
+/public/
