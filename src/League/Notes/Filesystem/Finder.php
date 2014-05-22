@@ -32,39 +32,28 @@ class Finder
 {
 
     /**
-     * Return the basename file.
+     * Get basename solutions.
      *
-     * @param        $file file
-     * @param string $extension file extension
+     * @param string $file   File
+     * @param null   $suffix Constants
      *
      * @return string
      */
-    public function basename($file, $extension = null)
+    public function basename($file, $suffix = null)
     {
-        return is_null($extension) ? basename($file) : basename($file, $extension);
+        return is_null($suffix) ? basename($file) : basename($file, $suffix);
     }
 
     /**
      * Verify if path or file exists.
      *
-     * @param $file path or file
+     * @param string $file Path or file
+     *
      * @return bool
      */
     public function exists($file)
     {
         return file_exists($file);
-    }
-
-    /**
-     * Check if it is a valid file.
-     *
-     * @param $file
-     *
-     * @return bool
-     */
-    public function isFile($file)
-    {
-        return is_file($file);
     }
 
     /**
@@ -89,6 +78,23 @@ class Finder
     public function isWritable($path)
     {
         return is_writable($path);
+    }
+
+    public function getContent($file)
+    {
+        return $this->isFile($file) ? file_get_contents($file) : null;
+    }
+
+    /**
+     * Check if it is a valid file.
+     *
+     * @param $file
+     *
+     * @return bool
+     */
+    public function isFile($file)
+    {
+        return is_file($file);
     }
 }
 /** @end Finder.php */

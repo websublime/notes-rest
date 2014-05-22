@@ -7,23 +7,24 @@
  *
  * PHP version 5
  *
- * @category  Support
- * @package   PhpStorm
+ * @category  Matcher
+ * @package   League\Notes\Annotation\Matcher
  * @author    Miguel Ramos <miguel.marques.ramos@gmail.com>
  * @copyright 2012-2014 Websublime.com
  * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
  * @release   GIT: $Id: v0.0.1
  * @link      http://symphonic.websublime.com
  */
+
 namespace League\Notes\Annotation\Matcher;
 
-use League\Notes\Annotation\Matcher\Abstractable\Matcher;
 use League\Notes\Annotation\Matcher\Contracts\MatcherInterface;
+use League\Notes\Annotation\Matcher\Contracts\HandlerInterface;
 
 /**
  * Description
  *
- * @category  Support
+ * @category  Matcher
  * @package   League\Notes\Annotation\Matcher
  * @author    Miguel Ramos <miguel.marques.ramos@gmail.com>
  * @copyright 2012-2014 Websublime.com
@@ -31,33 +32,18 @@ use League\Notes\Annotation\Matcher\Contracts\MatcherInterface;
  * @version   Release: v0.0.1
  * @link      http://symphonic.websublime.com
  */
-class Regex extends Matcher implements MatcherInterface
+class MatcherHandler implements HandlerInterface
 {
-    protected $length = 0;
+    protected $matchers = array();
 
-    public function matches($string, $default = null)
+    public function add($name, MatcherInterface $matcher)
     {
-        if (preg_match($this->regex, $string, $matches)) {
-            $match = $this->process($matches);
-        }
-
-        return isset($match) ? $match : $default;
+        $this->matchers[$name] = $matcher;
     }
 
-    protected function process(array $matches)
+    public function match($name, $content, $default = null)
     {
-        return $matches;
+        return $this->matchers[$name]->matches($content, $default);
     }
-
-    public function getLength()
-    {
-        return $this->length;
-    }
-
-    protected function length($string)
-    {
-        $this->length = strlen($string);
-    }
-
 }
-/** @end Regex.php */
+/** @end MatcherHandler.php */

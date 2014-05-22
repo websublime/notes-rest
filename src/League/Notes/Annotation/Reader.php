@@ -17,6 +17,7 @@
  */
 namespace League\Notes\Annotation;
 
+use League\Notes\Filesystem\Finder;
 /**
  * Description
  *
@@ -31,92 +32,54 @@ namespace League\Notes\Annotation;
 class Reader
 {
 
-    /**
-     * List of known annotations.
-     *
-     * @var array
-     */
-    private static $known_annotation = array(
-        'fix',
-        'fixme',
-        'override',
-        'abstract',
-        'access',
-        'code',
-        'deprec',
-        'endcode',
-        'exception',
-        'final',
-        'ingroup',
-        'inheritdoc',
-        'inheritDoc',
-        'magic',
-        'name',
-        'toc',
-        'tutorial',
-        'private',
-        'static',
-        'staticvar',
-        'staticVar',
-        'throw',
-        'api',
-        'author',
-        'category',
-        'copyright',
-        'deprecated',
-        'example',
-        'filesource',
-        'global',
-        'ignore',
-        'internal',
-        'license',
-        'link',
-        'method',
-        'package',
-        'param',
-        'property',
-        'property-read',
-        'property-write',
-        'return',
-        'see',
-        'since',
-        'source',
-        'subpackage',
-        'throws',
-        'todo',
-        'TODO',
-        'usedby',
-        'uses',
-        'var',
-        'version',
-        'codeCoverageIgnore',
-        'codeCoverageIgnoreStart',
-        'codeCoverageIgnoreEnd',
-        'SuppressWarnings',
-        'noinspection',
-        'package_version',
-    );
+    protected $finder;
 
-    /**
-     * Property to ingnore or not known annotations.
-     *
-     * @var boolean
-     */
-    private $ignoreKnownAnnotation;
+    protected $searchDir;
 
-    /**
-     * Append more annotations to the list of known annotations.
-     *
-     * @param string $annotation Annotation name
-     */
-    public static function appendKnownAnnotation($annotation)
+    protected $iterator;
+
+    public function __construct(Finder $finder = null, $searchDir = null)
     {
-        self::$known_annotation[] = $annotation;
+        $this->finder = is_null($finder) ? new Finder() : $finder;
+        $this->searchDir = $searchDir;
     }
 
-    public function __construct($ignore = true)
+    /**
+     * @return Finder
+     */
+    public function getFinder()
     {
-        $this->ignoreKnownAnnotation = $ignore;
+        return $this->finder;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIterator()
+    {
+        return $this->iterator;
+    }
+
+    public function setIterator(\SeekableIterator $iterator = null)
+    {
+        $this->iterator = is_null($iterator) ? new \FilesystemIterator(
+        $this->searchDir,
+        \FilesystemIterator::KEY_AS_FILENAME |
+        \FilesystemIterator::SKIP_DOTS |
+        \FilesystemIterator::FOLLOW_SYMLINKS
+        ) : $iterator;
+
+        return $this;
+    }
+
+    public function getSearchDir()
+    {
+        return $this->searchDir;
+    }
+
+    public function setSearchDir($searchDir)
+    {
+        $this->searchDir = $searchDir;
     }
 }
 /** @end Reader.php */

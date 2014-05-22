@@ -34,14 +34,10 @@ class FakeController
 {
 
     /**
-     * Grat fake method
-     * @return bool
+     * Grab fake method with single line.
      *
-     * @Rest(
-     *  @route /api/get
-     *  @method GET
-     *  @args simple
-     * )
+     * @return bool
+     * @Rest({"route": "/api/get", "method": "GET", "response": 200, "type": "application/json","parameters": {},"arguments": {}})
      */
     public function getMethod()
     {
@@ -49,14 +45,11 @@ class FakeController
     }
 
     /**
-     * Grat fake method
-     * @return bool
+     * Grab fake method with
+     * multi line description.
      *
-     * @Rest(
-     *  @route /api/post
-     *  @method POST
-     *  @args simple
-     * )
+     * @return bool
+     * @Rest({"route": "/api/post", "method": "POST", "response": 200, "type": "application/json","parameters": {},"arguments": {}})
      */
     public function postMethod()
     {
@@ -64,63 +57,30 @@ class FakeController
     }
 
     /**
-     * Grat fake method
+     * Grab fake method with
+     * multi line description with parameter.
+     *
+     * @param null $put Argument
+     *
      * @return bool
      *
-     * @Rest(
-     *  @route /api/put
-     *  @method PUT
-     *  @args simple
-     * )
+     * @Rest({
+     *  "route": "/api/put",
+     *  "method": "PUT",
+     *  "response": 200,
+     *  "type": "application/json",
+     *  "parameters": {},
+     *  "arguments": {
+     *      "put": {
+     *          "type": "null",
+     *          "default": "null"
+     *      }
+     *  }
+     * })
      */
-    public function putMethod()
+    public function putMethod($put = null)
     {
-        return false;
-    }
-
-    /**
-     * Grat fake method
-     * @return bool
-     *
-     * @Rest(
-     *  @route /api/delete
-     *  @method DELETE
-     *  @args simple
-     * )
-     */
-    public function deleteMethod()
-    {
-        return false;
-    }
-
-    /**
-     * Grat fake method
-     * @return bool
-     *
-     * @Rest(
-     *  @route /api/patch
-     *  @method PATCH
-     *  @args simple
-     * )
-     */
-    public function patchMethod()
-    {
-        return false;
-    }
-
-    /**
-     * Grat fake method
-     * @return bool
-     *
-     * @Rest(
-     *  @route /api/link
-     *  @method LINK
-     *  @args simple
-     * )
-     */
-    public function linkMethod()
-    {
-        return false;
+        return is_null($put) ? false : true;
     }
 }
 /** @end FakeController.php */
