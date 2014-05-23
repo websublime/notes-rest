@@ -1,4 +1,4 @@
-# League Skeleton
+# Notes Rest
 
 [![Build Status](https://travis-ci.org/thephpleague/statsd.png?branch=master)](https://travis-ci.org/thephpleague/statsd)
 [![Total Downloads](https://poser.pugx.org/league/statsd/downloads.png)](https://packagist.org/packages/league/statsd)
@@ -6,8 +6,10 @@
 
 **Replace Skeleton with your own package name in the above URLs**
 
-:package_description
+Rest Documentor generator. Cli utility to generate rest documentation in formats like
+blueprint, json, html.
 
+Currently in developement and not submited to League.
 
 ## Install
 
@@ -16,7 +18,7 @@ Via Composer
 ``` json
 {
     "require": {
-        "league/:package_name": "~1.0"
+        "league/notes-rest": "~1.0"
     }
 }
 ```
@@ -40,15 +42,15 @@ $ phpunit
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/thephpleague/:package_name/blob/master/CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](https://github.com/thephpleague/notes-rest/blob/master/CONTRIBUTING.md) for details.
 
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
-- [All Contributors](https://github.com/thephpleague/:package_name/contributors)
+- [Miguel Ramos](https://github.com/miguelramos)
+- [All Contributors](https://github.com/thephpleague/notes-rest/contributors)
 
 
 ## License
 
-The MIT License (MIT). Please see [License File](https://github.com/thephpleague/:package_name/blob/master/LICENSE) for more information.
+The MIT License (MIT). Please see [License File](https://github.com/thephpleague/notes-rest/blob/master/LICENSE) for more information.

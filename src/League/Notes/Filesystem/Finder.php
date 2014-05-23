@@ -11,22 +11,22 @@
  * @package   League\Notes\Filesystem
  * @author    Miguel Ramos <miguel.marques.ramos@gmail.com>
  * @copyright 2012-2014 Websublime.com
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @license   http://opensource.org/licenses/MIT MIT License
  * @release   GIT: $Id: v0.0.1
- * @link      http://symphonic.websublime.com
+ * @link      https://github.com/websublime/notes-rest
  */
 namespace League\Notes\Filesystem;
 
 /**
- * Description
+ * Class for file and directory treatement.
  *
  * @category  Filesystem
  * @package   League\Notes\Filesystem
  * @author    Miguel Ramos <miguel.marques.ramos@gmail.com>
  * @copyright 2012-2014 Websublime.com
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @license   http://opensource.org/licenses/MIT MIT License
  * @version   Release: v0.0.1
- * @link      http://symphonic.websublime.com
+ * @link      https://github.com/websublime/notes-rest
  */
 class Finder
 {

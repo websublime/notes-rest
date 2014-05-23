@@ -11,37 +11,83 @@
  * @package   League\Notes
  * @author    Miguel Ramos <miguel.marques.ramos@gmail.com>
  * @copyright 2012-2014 Websublime.com
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @license   http://opensource.org/licenses/MIT MIT License
  * @release   GIT: $Id: v0.0.1
- * @link      http://symphonic.websublime.com
+ * @link      https://github.com/websublime/notes-rest
  */
 namespace League\Notes;
 
 use League\Notes\Annotation\Reader;
 use League\Notes\Filesystem\Finder;
+use League\Notes\Reflection\ReflectionHandler;
 use League\Notes\Annotation\Matcher\Contracts\HandlerInterface;
 
 /**
- * Description
+ * Class to manage and process document php comments. PHP array
+ * definition creation for each class founded on the passed directory.
+ *
+ * Example:
+ * $config = array(
+ *   'dir'   => realpath(__DIR__.'/../tests/League/Notes/Test/Fixtures'),
+ *   'regex' => array(
+ *      'namespace'   => new Regex('/namespace\s+([\D]+\w*[\\?\w]*\s*);$/mis'),
+ *      'description' => new Regex('/(?x)\A([^\n]+(?:(?!(?<=\.)\n|\n{2})\n(?![\t]*@\pL)[^\n]+)*\.?)(?:\s*(?!@\pL)([^\n]+(?:\n+(?![\t]*@\pL)[^\n]+)*))?(\s+[\s\S]*)?/'),
+ *      'rest'        => new Regex('/@[A-Z][a-zA-Z0-9_]*\((?<info>{.+})\)$/mis')
+ *    )
+ * );
+ *
+ * $manager = new AnnotationManager($config, new MatcherHandler());
+ * $manager->init();
+ * $manager->process();
  *
  * @category  Notes
  * @package   League\Notes
  * @author    Miguel Ramos <miguel.marques.ramos@gmail.com>
  * @copyright 2012-2014 Websublime.com
- * @license   http://www.php.net/license/3_01.txt  PHP License 3.01
+ * @license   http://opensource.org/licenses/MIT MIT License
  * @version   Release: v0.0.1
- * @link      http://symphonic.websublime.com
+ * @link      https://github.com/websublime/notes-rest
  */
 class AnnotationManager
 {
+    /**
+     * Configuration properties.
+     *
+     * @var array
+     */
     protected $config;
 
+    /**
+     * Instance to handler reding files.
+     *
+     * @var League\Notes\Annotation\Reader
+     */
     protected $reader;
 
+    /**
+     * Instance to handler regex expressions.
+     *
+     * @var Annotation\Matcher\Contracts\HandlerInterface
+     */
     protected $handler;
 
+    /**
+     * Container result reader.
+     *
+     * @var array
+     */
     protected $container = array();
 
+    /**
+     * The config array is mandatory to have two keys.
+     * Dir key, defines where to search and regex key defines one
+     * or more regex to handle.
+     *
+     * @param array            $config Array configuration
+     * @param HandlerInterface $handler Instance matcher handler
+     *
+     * @throws InvalidArgumentException
+     */
     public function __construct(array $config, HandlerInterface $handler)
     {
         if (!array_key_exists('dir', $config)) {
@@ -56,12 +102,21 @@ class AnnotationManager
         $this->handler = $handler;
     }
 
-    public function make(\SeekableIterator $iterator = null)
+    /**
+     * Method responsable to init our dependencies.
+     */
+    public function init()
     {
-        $this->makeReader($iterator);
-        $this->buildRegex();
+        $this->makeReader();
+        $this->registerRegex();
     }
 
+    /**
+     * Method to iterate thru the directory and
+     * retrive information from classes present there.
+     *
+     * @return array
+     */
     public function process()
     {
         $iterator = $this->reader->getIterator();
@@ -71,16 +126,38 @@ class AnnotationManager
             if ($iterate->getExtension() == 'php') {
                 $content = $finder->getContent($iterate->getPath().'/'.$iterate->getFilename());
 
-                $namespace = $this->processNamespace($content);
+                $namespace    = $this->processNamespace($content);
+                $class        = empty($namespace) ? $iterate->getBasename('.php') : '\\'.$namespace.'\\'.$iterate->getBasename('.php');
+                $classHandler = new ReflectionHandler($class, $this->handler);
+                $data         = $classHandler->refactor();
+                $data['path'] = $iterate->getPath();
+
+                $this->container[$iterate->getBasename('.php')] =  $data;
             }
         }
+
+        ksort($this->container);
+
+        return $this->container;
     }
 
+    /**
+     * Returns a intance from reader.
+     *
+     * @return League\Notes\Annotation\Reader
+     */
     public function getReader()
     {
         return $this->reader;
     }
 
+    /**
+     * Search if namespace is defined on document.
+     *
+     * @param $content PHP Code
+     *
+     * @return mixed|string
+     */
     protected function processNamespace($content)
     {
         $namespace = $this->handler->match('namespace', $content);
@@ -88,16 +165,19 @@ class AnnotationManager
         return empty($namespace) ? '' : array_pop($namespace);
     }
 
-    protected function makeReader($iterator)
+    /**
+     * Instanciate our dependencies.
+     */
+    protected function makeReader()
     {
-        $finder = new Finder();
-
+        $finder       = new Finder();
         $this->reader = new Reader($finder, $this->config['dir']);
-
-        is_null($iterator) ? $this->reader->setIterator() : $this->reader->setIterator($iterator);
     }
 
-    protected function buildRegex()
+    /**
+     * Register our regex expressions.
+     */
+    protected function registerRegex()
     {
         foreach ($this->config['regex'] as $name => $expression ) {
             $this->handler->add($name, $expression);
@@ -105,4 +185,3 @@ class AnnotationManager
     }
 }
 /** @end AnnotationManager.php */
- 
