@@ -112,6 +112,25 @@ class AnnotationManager
     }
 
     /**
+     * Instanciate our dependencies.
+     */
+    protected function makeReader()
+    {
+        $finder = new Finder();
+        $this->reader = new Reader($finder, $this->config['dir']);
+    }
+
+    /**
+     * Register our regex expressions.
+     */
+    protected function registerRegex()
+    {
+        foreach ($this->config['regex'] as $name => $expression) {
+            $this->handler->add($name, $expression);
+        }
+    }
+
+    /**
      * Method to iterate thru the directory and
      * retrive information from classes present there.
      *
@@ -128,27 +147,25 @@ class AnnotationManager
 
                 $namespace    = $this->processNamespace($content);
                 $class        = empty($namespace) ? $iterate->getBasename('.php') : '\\'.$namespace.'\\'.$iterate->getBasename('.php');
-                $classHandler = new ReflectionHandler($class, $this->handler);
-                $data         = $classHandler->refactor();
-                $data['path'] = $iterate->getPath();
 
-                $this->container[$iterate->getBasename('.php')] =  $data;
+                try {
+                    $classHandler = new ReflectionHandler(
+                    $class, $this->handler
+                    );
+                    $data = $classHandler->refactor();
+                    $data['path'] = $iterate->getPath();
+
+                    $this->container[$iterate->getBasename('.php')] = $data;
+                } catch (\ErrorException $e) {
+                    //var_dump($e);
+                }
+
             }
         }
 
         ksort($this->container);
 
         return $this->container;
-    }
-
-    /**
-     * Returns a intance from reader.
-     *
-     * @return League\Notes\Annotation\Reader
-     */
-    public function getReader()
-    {
-        return $this->reader;
     }
 
     /**
@@ -166,22 +183,13 @@ class AnnotationManager
     }
 
     /**
-     * Instanciate our dependencies.
+     * Returns a intance from reader.
+     *
+     * @return League\Notes\Annotation\Reader
      */
-    protected function makeReader()
+    public function getReader()
     {
-        $finder       = new Finder();
-        $this->reader = new Reader($finder, $this->config['dir']);
-    }
-
-    /**
-     * Register our regex expressions.
-     */
-    protected function registerRegex()
-    {
-        foreach ($this->config['regex'] as $name => $expression ) {
-            $this->handler->add($name, $expression);
-        }
+        return $this->reader;
     }
 }
 /** @end AnnotationManager.php */
