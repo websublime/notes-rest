@@ -34,6 +34,19 @@ use League\Notes\Filesystem\Contracts\WriterInterface;
  */
 class BluePrintWriter implements WriterInterface
 {
+    protected $doc;
+
+    protected $file;
+
+    protected $buffer;
+
+    CONST FORMAT = "FORMAT: 1A";
+
+    public function __construct($file)
+    {
+        $this->file = $file;
+    }
+
     /**
      * Write documentation representation.
      *
@@ -45,7 +58,5 @@ class BluePrintWriter implements WriterInterface
     {
         // TODO: Implement write() method.
     }
-
-
 }
 /** @end BluePrintWriter.php */

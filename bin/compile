@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+$loader_localization = array(
+    __DIR__.'/vendor/autoload.php',
+    __DIR__.'/../vendor/autoload.php',
+    __DIR__.'/../../vendor/autoload.php',
+    __DIR__.'/../../../vendor/autoload.php',
+    __DIR__.'/../../../../vendor/autoload.php'
+);
