@@ -19,6 +19,7 @@ namespace League\Notes;
 
 use League\Notes\Annotation\Reader;
 use League\Notes\Filesystem\Finder;
+use League\Notes\Filesystem\Contracts\WriterInterface;
 use League\Notes\Annotation\Matcher\Contracts\HandlerInterface;
 
 /**
@@ -71,11 +72,11 @@ class AnnotationManager
     protected $handler;
 
     /**
-     * Container result reader.
+     * Representation instance.
      *
-     * @var array
+     * @var NotesRepresentation
      */
-    protected $container = array();
+    protected $representation;
 
     /**
      * The config array is mandatory to have two keys.
@@ -137,9 +138,21 @@ class AnnotationManager
      */
     public function process()
     {
-        $representation = new NotesRepresentation($this->reader);
+        $this->representation = new NotesRepresentation($this->reader);
 
-        return $representation->generate($this->handler);
+        return $this->representation->generate($this->handler);
+    }
+
+    /**
+     * Method to write our representatio to what we want.
+     *
+     * @param WriterInterface $writer Writer instance
+     *
+     * @return mixed
+     */
+    public function write(WriterInterface $writer)
+    {
+        return $writer->write($this->representation);
     }
 
     /**

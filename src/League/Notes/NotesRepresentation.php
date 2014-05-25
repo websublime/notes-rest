@@ -49,11 +49,24 @@ class NotesRepresentation
      */
     protected $representation = array();
 
+    /**
+     * Construct class with reader instance.
+     *
+     * @param Reader $reader
+     */
     public function __construct(Reader $reader)
     {
         $this->reader = $reader;
     }
 
+    /**
+     * Method to read all methods on class and get
+     * comments and construct the representation array.
+     *
+     * @param HandlerInterface $matcher Macther handler instance
+     *
+     * @return NotesRepresentation
+     */
     public function generate(HandlerInterface $matcher)
     {
         $iterator = $this->reader->getIterator();
@@ -107,6 +120,11 @@ class NotesRepresentation
         return empty($namespace) ? '' : array_pop($namespace);
     }
 
+    /**
+     * Gets representation doc array.
+     *
+     * @return array
+     */
     public function getRepresentation()
     {
         return $this->representation;

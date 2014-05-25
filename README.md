@@ -25,7 +25,7 @@ Via Composer
 
 
 ## Usage
-```json
+``` json
 @Rest({
     "title": "",
     "section": "",

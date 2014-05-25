@@ -7,8 +7,8 @@
  *
  * PHP version 5
  *
- * @category  Contracts
- * @package   League\Notes\Filesystem\Contracts
+ * @category  Writers
+ * @package   League\Notes\Filesystem\Writers
  * @author    Miguel Ramos <miguel.marques.ramos@gmail.com>
  * @copyright 2012-2014 Websublime.com
  * @license   http://opensource.org/licenses/MIT MIT License
@@ -16,22 +16,23 @@
  * @link      https://github.com/websublime/notes-rest
  */
 
-namespace League\Notes\Filesystem\Contracts;
+namespace League\Notes\Filesystem\Writers;
 
 use League\Notes\NotesRepresentation;
+use League\Notes\Filesystem\Contracts\WriterInterface;
 
 /**
  * Description
  *
- * @category  Contracts
- * @package   League\Notes\Filesystem\Contracts
+ * @category  Writers
+ * @package   League\Notes\Filesystem\Writers
  * @author    Miguel Ramos <miguel.marques.ramos@gmail.com>
  * @copyright 2012-2014 Websublime.com
  * @license   http://opensource.org/licenses/MIT MIT License
  * @version   Release: v0.0.1
  * @link      https://github.com/websublime/notes-rest
  */
-interface WriterInterface
+class BluePrintWriter implements WriterInterface
 {
     /**
      * Write documentation representation.
@@ -40,7 +41,11 @@ interface WriterInterface
      *
      * @return mixed
      */
-    public function write(NotesRepresentation $doc);
+    public function write(NotesRepresentation $doc)
+    {
+        // TODO: Implement write() method.
+    }
+
+
 }
-/** @end WriterInterface.php */
- 
+/** @end BluePrintWriter.php */
