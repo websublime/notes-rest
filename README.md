@@ -25,6 +25,14 @@ Via Composer
 
 
 ## Usage
+```json
+@Rest({
+    "title": "",
+    "section": "",
+    "request" : {},
+    "response": {}
+})
+```
 
 ``` php
 $skeleton = new League\Skeleton();

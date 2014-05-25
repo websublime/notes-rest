@@ -19,7 +19,6 @@ namespace League\Notes;
 
 use League\Notes\Annotation\Reader;
 use League\Notes\Filesystem\Finder;
-use League\Notes\Reflection\ReflectionHandler;
 use League\Notes\Annotation\Matcher\Contracts\HandlerInterface;
 
 /**
@@ -134,52 +133,13 @@ class AnnotationManager
      * Method to iterate thru the directory and
      * retrive information from classes present there.
      *
-     * @return array
+     * @return NotesRepresentation
      */
     public function process()
     {
-        $iterator = $this->reader->getIterator();
-        $finder   = $this->reader->getFinder();
+        $representation = new NotesRepresentation($this->reader);
 
-        foreach ($iterator as $iterate) {
-            if ($iterate->getExtension() == 'php') {
-                $content = $finder->getContent($iterate->getPath().'/'.$iterate->getFilename());
-
-                $namespace    = $this->processNamespace($content);
-                $class        = empty($namespace) ? $iterate->getBasename('.php') : '\\'.$namespace.'\\'.$iterate->getBasename('.php');
-
-                try {
-                    $classHandler = new ReflectionHandler(
-                    $class, $this->handler
-                    );
-                    $data = $classHandler->refactor();
-                    $data['path'] = $iterate->getPath();
-
-                    $this->container[$iterate->getBasename('.php')] = $data;
-                } catch (\ErrorException $e) {
-                    //var_dump($e);
-                }
-
-            }
-        }
-
-        ksort($this->container);
-
-        return $this->container;
-    }
-
-    /**
-     * Search if namespace is defined on document.
-     *
-     * @param $content PHP Code
-     *
-     * @return mixed|string
-     */
-    protected function processNamespace($content)
-    {
-        $namespace = $this->handler->match('namespace', $content);
-
-        return empty($namespace) ? '' : array_pop($namespace);
+        return $representation->generate($this->handler);
     }
 
     /**

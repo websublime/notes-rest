@@ -18,6 +18,7 @@
 namespace League\Notes\Annotation;
 
 use League\Notes\Filesystem\Finder;
+
 /**
  * Class responsable to define iterator for iterate
  * thru directories and finder file reader.
@@ -71,6 +72,20 @@ class Reader
     }
 
     /**
+     * Init our recursive iterator for searching files.
+     */
+    protected function initIterator()
+    {
+        $flags = \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS;
+        $iterator = new \RecursiveDirectoryIterator($this->searchDir, $flags);
+
+        $this->iterator = new \RecursiveIteratorIterator(
+        $iterator,
+        \RecursiveIteratorIterator::SELF_FIRST
+        );
+    }
+
+    /**
      * Returns finder instance or null.
      *
      * @return Finder|null
@@ -112,17 +127,6 @@ class Reader
         if (!is_null($searchDir) and $this->finder->isDir($searchDir)) {
             $this->initIterator();
         }
-    }
-
-    /**
-     * Init our recursive iterator for searching files.
-     */
-    protected function initIterator()
-    {
-        $flags    = \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS;
-        $iterator = new \RecursiveDirectoryIterator($this->searchDir, $flags);
-
-        $this->iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::SELF_FIRST);
     }
 }
 /** @end Reader.php */
