@@ -39,7 +39,7 @@ $config = array(
 
  $manager = new AnnotationManager($config, new MatcherHandler());
  $manager->init();
- $manager->process();
+ var_dump($manager->process());
 ```
 ## Testing
 
