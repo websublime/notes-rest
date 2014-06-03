@@ -27,7 +27,20 @@ Via Composer
     "response": {}
 })
 ```
+``` php
+$config = array(
+   'dir'   => realpath(__DIR__.'/../tests/League/Notes/Test/Fixtures'),
+   'regex' => array(
+      'namespace'   => new Regex('/namespace\s+([\D]+\w*[\\?\w]*\s*);$/mis'),
+      'description' => new Regex('/(?x)\A([^\n]+(?:(?!(?<=\.)\n|\n{2})\n(?![\t]*@\pL)[^\n]+)*\.?)(?:\s*(?!@\pL)([^\n]+(?:\n+(?![\t]*@\pL)[^\n]+)*))?(\s+[\s\S]*)?/'),
+      'rest'        => new Regex('/@[A-Z][a-zA-Z0-9_]*\((?<info>{.+})\)$/mis')
+    )
+ );
 
+ $manager = new AnnotationManager($config, new MatcherHandler());
+ $manager->init();
+ var_dump($manager->process());
+```
 ## Testing
 
 ``` bash
