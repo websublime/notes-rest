@@ -70,30 +70,27 @@ class NotesRepresentation
     public function generate(HandlerInterface $matcher)
     {
         $iterator = $this->reader->getIterator();
-        $finder = $this->reader->getFinder();
+        $finder   = $this->reader->getFinder();
 
         foreach ($iterator as $iterate) {
             if ($iterate->getExtension() == 'php') {
                 $content = $finder->getContent(
-                $iterate->getPath() . '/' . $iterate->getFilename()
+                    $iterate->getPath() . '/' . $iterate->getFilename()
                 );
 
                 $namespace = $this->processNamespace($matcher, $content);
-                $class = empty($namespace) ? $iterate->getBasename(
-                '.php'
-                ) : '\\' . $namespace . '\\' . $iterate->getBasename('.php');
+                $class     = empty($namespace) ?
+                            $iterate->getBasename('.php') :
+                            '\\' . $namespace . '\\' . $iterate->getBasename('.php');
 
                 try {
-                    $classHandler = new ReflectionHandler(
-                    $class, $matcher
-                    );
+                    $classHandler = new ReflectionHandler($class, $matcher);
 
-                    $data = $classHandler->refactor();
+                    $data         = $classHandler->refactor();
                     $data['path'] = $iterate->getPath();
 
-                    $this->representation[$iterate->getBasename(
-                    '.php'
-                    )] = $data;
+                    $this->representation[$iterate->getBasename('.php')] = $data;
+
                 } catch (\ErrorException $e) {
                     //var_dump($e);
                 }

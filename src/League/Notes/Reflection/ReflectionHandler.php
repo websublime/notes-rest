@@ -54,6 +54,8 @@ class ReflectionHandler
      */
     protected $reflection;
 
+    protected $sections = array();
+
     /**
      * Handles class defined and applies match rules.
      *
@@ -94,9 +96,35 @@ class ReflectionHandler
                 'description' => $description,
                 'rest'        => $rest
             );
+
+            $this->group($rest['section']);
         }
 
         return $collection;
+    }
+
+    /**
+     * Method to get a singular section if defined.
+     *
+     * @param string $section Section to get
+     *
+     * @return mixed
+     */
+    public function getSection($section)
+    {
+        $needle = array_search(strtolower($section),array_map('strtolower',$this->sections));
+
+        return empty($needle) ? null : $this->sections[$needle];
+    }
+
+    /**
+     * Method to get all sections register.
+     *
+     * @return array
+     */
+    public function getSections()
+    {
+        return $this->sections;
     }
 
     /**
@@ -132,6 +160,18 @@ class ReflectionHandler
             isset($description[1]) ? $description[1] : null,
             isset($rest['info']) ? json_decode($rest['info'], true) : null
         );
+    }
+
+    /**
+     * Method to insert into collection of sections.
+     * 
+     * @param string $section Section to register
+     */
+    protected function group($section)
+    {
+        if (!in_array($section, $this->sections)) {
+            $this->sections[] = $section;
+        }
     }
 }
 /** @end ReflectionHandler.php */

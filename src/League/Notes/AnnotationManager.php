@@ -116,7 +116,7 @@ class AnnotationManager
      */
     protected function makeReader()
     {
-        $finder = new Finder();
+        $finder       = new Finder();
         $this->reader = new Reader($finder, $this->config['dir']);
     }
 

@@ -37,7 +37,44 @@ class TestController
      * Grab fake method with single line.
      *
      * @return bool
-     * @Rest({"route": "/api/get", "method": "GET", "response": 200, "type": "application/json","parameters": {},"arguments": {}})
+     * @Rest({
+     *  "section": "Fake",
+     *  "title": "Great fake put method",
+     *  "resource": {
+     *     "class": "League\\Notes\\Test\\Fixtures\\Deep\\TestController",
+     *     "method": "getMethod"
+     *  },
+     *  "description": "Maybe here the description to the response on success and failure",
+     *  "request": {
+     *     "route": "/api/put",
+     *     "method": "PUT",
+     *     "parameters": {
+     *         "put": {
+     *             "validation": "\\d+",
+     *             "required": true
+     *         }
+     *     },
+     *     "headers": {
+     *         "content-type": "application/json"
+     *     }
+     *  },
+     *  "response": [
+     *     {
+     *         "content-type": "application/json",
+     *         "status": 200,
+     *         "link" : "http://link.to.response.success"
+     *     },
+     *     {
+     *         "status": 401,
+     *         "link" : "http://link.to.response.failure"
+     *     },
+     *     {
+     *         "status": 400,
+     *         "link" : "http://link.to.response.error",
+     *         "body" : "Should this exists?"
+     *     }
+     *  ]
+     * })
      */
     public function getMethod()
     {
