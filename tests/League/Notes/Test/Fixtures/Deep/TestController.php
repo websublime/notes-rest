@@ -34,44 +34,47 @@ class TestController
 {
 
     /**
-     * Grab fake method with single line.
+     * Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+     * tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+     * veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+     * commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+     * velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+     * occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+     * mollit anim id est laborum.
      *
      * @return bool
+     *
      * @Rest({
-     *  "section": "Fake",
-     *  "title": "Great fake put method",
+     *  "section": "Test",
+     *  "title": "Get test controller",
      *  "resource": {
      *     "class": "League\\Notes\\Test\\Fixtures\\Deep\\TestController",
      *     "method": "getMethod"
      *  },
-     *  "description": "Maybe here the description to the response on success and failure",
+     *  "description": "Short description",
      *  "request": {
-     *     "route": "/api/put",
-     *     "method": "PUT",
-     *     "parameters": {
-     *         "put": {
-     *             "validation": "\\d+",
-     *             "required": true
-     *         }
-     *     },
+     *     "route": "/api/test/get",
+     *     "method": "GET",
+     *     "parameters": [],
      *     "headers": {
      *         "content-type": "application/json"
      *     }
      *  },
      *  "response": [
      *     {
-     *         "content-type": "application/json",
      *         "status": 200,
+     *         "content-type": "application/json",
      *         "link" : "http://link.to.response.success"
      *     },
      *     {
      *         "status": 401,
+     *         "content-type": "application/json",
      *         "link" : "http://link.to.response.failure"
      *     },
      *     {
      *         "status": 400,
-     *         "link" : "http://link.to.response.error",
-     *         "body" : "Should this exists?"
+     *         "content-type": "application/json",
+     *         "link" : "http://link.to.response.error"
      *     }
      *  ]
      * })
@@ -82,11 +85,50 @@ class TestController
     }
 
     /**
-     * Grab fake method with
-     * multi line description.
+     * Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+     * tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+     * veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+     * commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+     * velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+     * occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+     * mollit anim id est laborum.
      *
      * @return bool
-     * @Rest({"route": "/api/post", "method": "POST", "response": 200, "type": "application/json","parameters": {},"arguments": {}})
+     *
+     * @Rest({
+     *  "section": "Test",
+     *  "title": "Post test controller",
+     *  "resource": {
+     *     "class": "League\\Notes\\Test\\Fixtures\\Deep\\TestController",
+     *     "method": "postMethod"
+     *  },
+     *  "description": "Short description",
+     *  "request": {
+     *     "route": "/api/test/post",
+     *     "method": "POST",
+     *     "parameters": [],
+     *     "headers": {
+     *         "content-type": "application/json"
+     *     }
+     *  },
+     *  "response": [
+     *     {
+     *         "status": 200,
+     *         "content-type": "application/json",
+     *         "link" : "http://link.to.response.success"
+     *     },
+     *     {
+     *         "status": 401,
+     *         "content-type": "application/json",
+     *         "link" : "http://link.to.response.failure"
+     *     },
+     *     {
+     *         "status": 400,
+     *         "content-type": "application/json",
+     *         "link" : "http://link.to.response.error"
+     *     }
+     *  ]
+     * })
      */
     public function postMethod()
     {
@@ -94,25 +136,54 @@ class TestController
     }
 
     /**
-     * Grab fake method with
-     * multi line description with parameter.
-     *
-     * @param null $put Argument
+     * Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+     * tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+     * veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+     * commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+     * velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+     * occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+     * mollit anim id est laborum.
      *
      * @return bool
      *
      * @Rest({
-     *  "route": "/api/put",
-     *  "method": "PUT",
-     *  "response": 200,
-     *  "type": "application/json",
-     *  "parameters": {},
-     *  "arguments": {
-     *      "put": {
-     *          "type": "null",
-     *          "default": "null"
-     *      }
-     *  }
+     *  "section": "Test",
+     *  "title": "Put test controller",
+     *  "resource": {
+     *     "class": "League\\Notes\\Test\\Fixtures\\Deep\\TestController",
+     *     "method": "putMethod"
+     *  },
+     *  "description": "Short description",
+     *  "request": {
+     *     "route": "/api/test/put",
+     *     "method": "PUT",
+     *     "parameters": [
+     *         {
+     *             "validation": "\\d+",
+     *             "required": true
+     *         }
+     *     ],
+     *     "headers": {
+     *         "content-type": "application/json"
+     *     }
+     *  },
+     *  "response": [
+     *     {
+     *         "status": 200,
+     *         "content-type": "application/json",
+     *         "link" : "http://link.to.response.success"
+     *     },
+     *     {
+     *         "status": 401,
+     *         "content-type": "application/json",
+     *         "link" : "http://link.to.response.failure"
+     *     },
+     *     {
+     *         "status": 400,
+     *         "content-type": "application/json",
+     *         "link" : "http://link.to.response.error"
+     *     }
+     *  ]
      * })
      */
     public function putMethod($put = null)

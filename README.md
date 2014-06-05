@@ -18,15 +18,54 @@ Via Composer
 ```
 
 
-## Usage
+## Rest template anotation
+The annotation is a kind extensive to be more acurate and descritive. Description
+is given as normal doc annotation and it is not represented in this template. Format
+used on annotation is json, so be carefull on make it a valid json. 
+
 ``` json
 @Rest({
-    "title": "",
-    "section": "",
-    "request" : {},
-    "response": {}
+   "section": "Fake",
+   "title": "Put fake controller",
+   "resource": {
+      "class": "League\\Notes\\Test\\Fixtures\\FakeController",
+      "method": "putMethod"
+   },
+   "description": "Short description",
+   "request": {
+      "route": "/api/fake/put",
+      "method": "PUT",
+      "parameters": [
+          {
+              "validation": "\\d+",
+              "required": true
+          }
+      ],
+      "headers": {
+          "content-type": "application/json"
+      }
+   },
+   "response": [
+      {
+          "status": 200,
+          "content-type": "application/json",
+          "link" : "http://link.to.response.success"
+      },
+      {
+          "status": 401,
+          "content-type": "application/json",
+          "link" : "http://link.to.response.failure"
+      },
+      {
+          "status": 400,
+          "content-type": "application/json",
+          "link" : "http://link.to.response.error"
+      }
+   ]
 })
+
 ```
+## Usage
 ``` php
 $config = array(
    'dir'   => realpath(__DIR__.'/../tests/League/Notes/Test/Fixtures'),

@@ -48,12 +48,10 @@ class ReflectionHandler
     protected $matcher;
 
     /**
-     * Intance ReflectionClass.
+     * Collection of sections
      *
-     * @var ReflectionClass
+     * @var array
      */
-    protected $reflection;
-
     protected $sections = array();
 
     /**
@@ -97,7 +95,7 @@ class ReflectionHandler
                 'rest'        => $rest
             );
 
-            $this->group($rest['section']);
+            isset($rest['section']) ? $this->group($rest['section']) :'';
         }
 
         return $collection;

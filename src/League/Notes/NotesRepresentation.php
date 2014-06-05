@@ -75,19 +75,20 @@ class NotesRepresentation
         foreach ($iterator as $iterate) {
             if ($iterate->getExtension() == 'php') {
                 $content = $finder->getContent(
-                    $iterate->getPath() . '/' . $iterate->getFilename()
+                    $iterate->getPath().'/'.$iterate->getFilename()
                 );
 
                 $namespace = $this->processNamespace($matcher, $content);
                 $class     = empty($namespace) ?
                             $iterate->getBasename('.php') :
-                            '\\' . $namespace . '\\' . $iterate->getBasename('.php');
+                            '\\'.$namespace.'\\'.$iterate->getBasename('.php');
 
                 try {
                     $classHandler = new ReflectionHandler($class, $matcher);
 
-                    $data         = $classHandler->refactor();
-                    $data['path'] = $iterate->getPath();
+                    $data             = $classHandler->refactor();
+                    $data['path']     = $iterate->getPath();
+                    $data['instance'] = $classHandler;
 
                     $this->representation[$iterate->getBasename('.php')] = $data;
 
